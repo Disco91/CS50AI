@@ -117,6 +117,7 @@ def shortest_path(source, target):
         # Choose Node from frontier
         node = frontier.remove()
 
+        # Store the current path if we have reached the goal
         if node.state == goal:
             path = []
             while node.parent is not None:
