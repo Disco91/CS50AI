@@ -61,17 +61,12 @@ def main():
     print("Loading data...")
     load_data(directory)
     print("Data loaded.")
-    '''
     source = person_id_for_name(input("Name: "))
     if source is None:
         sys.exit("Person not found.")
     target = person_id_for_name(input("Name: "))
     if target is None:
         sys.exit("Person not found.")
-    '''
-    # Delete after use and remove ''' from above
-    source = person_id_for_name("Gary Sinise")
-    target = person_id_for_name("Demi Moore")
 
 
     path = shortest_path(source, target)
@@ -117,7 +112,7 @@ def shortest_path(source, target):
         # Choose Node from frontier
         node = frontier.remove()
 
-        # Store the current path if we have reached the goal
+        # Return the current path if we have reached the goal
         if node.state == goal:
             path = []
             while node.parent is not None:
@@ -127,18 +122,16 @@ def shortest_path(source, target):
             print(path)
             return path
         
+        # If we havent reached goal add the node to explored so we dont revisit.
         explored.add(node.state)
 
+        # For each neighbor (movie, person) of the current node,
+        # create a child node (person connected by a movie) if it hasn't been seen,
+        # and add it to the frontier for future exploration.
         for movie_id, person_id  in neighbors_for_person(node.state):
             if not frontier.contains_state(person_id) and person_id not in explored:
                 child = Node(state=person_id, parent = node, action = movie_id)
                 frontier.add(child)
-
-        
-
-    print('end')
-    #raise NotImplementedError
-
 
 def person_id_for_name(name):
     """
